@@ -1,0 +1,43 @@
+{
+  "name": "simple-server",
+  "version": "1.0.0",
+  "description": "a simple node server",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "dev": "nodemon --exec yarn restart",
+    "restart": "rimraf dist && yarn build && yarn start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "@babel/preset-env": "7.9.0",
+    "nodemon": "2.0.2",
+    "rimraf": "3.0.2"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "12"
+          }
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "bcrypt": "4.0.1",
+    "body-parser": "1.19.0",
+    "config": "3.3.1",
+    "express": "4.17.1",
+    "mongodb": "3.5.5",
+    "mongoose": "5.9.7",
+    "morgan": "1.10.0"
+  }
+}
