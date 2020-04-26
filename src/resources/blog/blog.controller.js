@@ -12,7 +12,10 @@ const createOne = model => async (req, res) => {
 
 const getAll = model => async (req, res) => {
   try {
-    const docs = await model.find().exec();
+    const docs = await model
+      .find()
+      .lean()
+      .exec();
     res.status(201).json({ data: docs });
   } catch (e) {
     console.error(e);
