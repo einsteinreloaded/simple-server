@@ -5,6 +5,7 @@ const uri = config.get("dbConfigUrl");
 export const connect = () => {
   return mongoose.connect(uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   });
 };

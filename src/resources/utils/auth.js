@@ -7,7 +7,7 @@ export const protect = async (req, res, next) => {
       return res.status(401).json({ message: "User not authenticated!!" });
     }
     const doc = await Auth.findOne({ token }, "user")
-      .populate("user", "firstname lastname username -_id")
+      .populate("user", "firstname lastname username")
       .lean()
       .exec();
     if (doc) {

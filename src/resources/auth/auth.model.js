@@ -8,6 +8,6 @@ const authSchema = new Schema({
   createdOn: { type: Date, default: Date.now }
 });
 
-authSchema.index({ userid: 1, token: 1 }, { unique: true });
+authSchema.index({ user: 1, token: 1 }, { unique: true });
 
 export const Auth = mongoose.model("auth", authSchema);
