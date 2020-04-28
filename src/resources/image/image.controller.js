@@ -1,28 +1,31 @@
 import { Image } from "./image.model";
+import sharp from "sharp";
 
 const createOne = model => async (req, res) => {
   try {
+    const { buffer, mimetype } = req.file;
     const doc = await model.create({
       title: req.body.title,
       user: req.user._id,
       image: {
-        data: req.file.buffer,
-        contentType: req.file.mimetype
+        data: buffer,
+        contentType: mimetype
       }
     });
-    console.log(doc);
-    res
+    const processedImage = await sharp(buffer)
+      .grayscale()
+      .resize({ width: 100 })
+      .toBuffer();
+    return res
       .status(201)
-      .contentType(doc.image.contentType)
-      .send(doc.image.data);
+      .contentType(mimetype)
+      .send(processedImage);
   } catch (e) {
     console.error(e);
-    res
-      .status(400)
-      .json({
-        message:
-          "Image with the same title is already created by you. Please change the title and try again!"
-      });
+    res.status(400).json({
+      message:
+        "Image with the same title is already created by you. Please change the title and try again!"
+    });
   }
 };
 
