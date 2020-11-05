@@ -42,19 +42,7 @@ const getAll = (model) => async (req, res) => {
   }
 };
 
-const getOne = (model) => async (req, res) => {
-  try {
-    const { id } = req.params;
-    const image = await model.findById(id).lean().exec();
-    res.status(201).json({ data: image });
-  } catch (e) {
-    console.error(e);
-    res.status(400).end();
-  }
-};
-
 export default {
   createOne: createOne(Image),
   getAll: getAll(Image),
-  getOne: getOne(Image),
 };
