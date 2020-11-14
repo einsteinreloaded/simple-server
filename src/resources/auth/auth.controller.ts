@@ -1,7 +1,10 @@
 import { Auth } from "./auth.model";
 import jwt from "jsonwebtoken";
 import { protect } from "../utils/auth";
-
+import {  Request, Response } from "express";
+export interface TokenRequest extends Request{
+  user:Object
+}
 const createOne = model => async (req, res) => {
   try {
     const salt = Date.now().toString();
@@ -19,7 +22,7 @@ const createOne = model => async (req, res) => {
   }
 };
 
-const verifyToken = async (req, res, next) => {
+const verifyToken = async (req:TokenRequest, res:Response, next) => {
   protect(req, res, () => res.status(201).json({ data: req.user }));
 };
 

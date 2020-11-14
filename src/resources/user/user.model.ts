@@ -2,6 +2,14 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import bcrypt from "bcrypt";
 
+export interface User extends mongoose.Document {
+  firstname: String,
+  lastname: String,
+  password: String,
+  username: String,
+  date: Date
+};
+
 const userSchema = new Schema({
   firstname: String,
   lastname: String,
@@ -23,4 +31,4 @@ userSchema.methods.checkPassword = async function(password) {
 
 userSchema.index({ username: 1 }, { unique: true });
 
-export const User = mongoose.model("user", userSchema);
+export const User = mongoose.model<User>("user", userSchema);
