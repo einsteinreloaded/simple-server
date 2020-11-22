@@ -5,7 +5,7 @@ export interface Auth extends mongoose.Document {
   token: String,
   user: ObjectId,
   salt: String,
-  createdOn: Date
+  createdOn?: Date
 }
 const authSchema = new Schema({
   token: String,

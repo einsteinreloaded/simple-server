@@ -7,7 +7,8 @@ export interface User extends mongoose.Document {
   lastname: String,
   password: String,
   username: String,
-  date: Date
+  date: Date,
+  checkPassword:Function
 };
 
 const userSchema = new Schema({
@@ -18,7 +19,7 @@ const userSchema = new Schema({
   date: { type: Date, default: Date.now }
 });
 
-userSchema.methods.checkPassword = async function(password) {
+userSchema.methods.checkPassword = async function(password:string) {
   try {
     const hashedPassword = this.password;
     const match = await bcrypt.compare(password, hashedPassword);

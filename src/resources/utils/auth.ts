@@ -1,8 +1,9 @@
+import { NextFunction, Request, Response } from "express";
 import { Auth } from "../auth/auth.model";
 
-export const protect = async (req, res, next) => {
+export const protect = async (req:any, res:Response, next:NextFunction) => {
   try {
-    const token = req.headers["auth-token"];
+    const token:string|undefined = req.header("auth-token");
     if (!token) {
       return res.status(401).json({ message: "User not authenticated!!" });
     }

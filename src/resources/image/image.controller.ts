@@ -1,7 +1,9 @@
 import { Image } from "./image.model";
 import sharp from "sharp";
+import { Model } from "mongoose";
+import { Response } from "express";
 
-const createOne = (model) => async (req, res) => {
+const createOne = (model:Model<Image, {}>) => async (req:any, res: Response) => {
   try {
     if (!req.file)
       return res.status(400).json({
@@ -31,7 +33,7 @@ const createOne = (model) => async (req, res) => {
   }
 };
 
-const getAll = (model) => async (req, res) => {
+const getAll = (model:Model<Image, {}>) => async (req:any, res:Response) => {
   try {
     const queryParams = req.query;
     const docs = await model.find(queryParams).lean().exec();

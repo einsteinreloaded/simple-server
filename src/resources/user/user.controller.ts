@@ -1,10 +1,12 @@
 import { User } from "./user.model";
 import authController from "../auth/auth.controller";
 import bcrypt from "bcrypt";
+import { Model } from "mongoose";
+import { Request, Response } from "express";
 
 const saltRounds = 10;
 
-const createPasswordHash = async password => {
+const createPasswordHash = async (password:string) => {
   try {
     return await bcrypt.hash(password, saltRounds);
   } catch (e) {
@@ -12,10 +14,10 @@ const createPasswordHash = async password => {
   }
 };
 
-const createOne = model => async (req, res) => {
+const createOne = (model:Model<User,{}>) => async (req:Request, res:Response) => {
   try {
-    const password = await createPasswordHash(req.body.password);
-    const doc = await model.create({ ...req.body, password });
+    const password:string = await createPasswordHash(req.body.password);
+    const doc:User = await model.create({ ...req.body, password });
     const { password: passwd, _id, ...user } = doc.toJSON();
     res.status(201).json({ data: user });
   } catch (e) {
@@ -24,9 +26,9 @@ const createOne = model => async (req, res) => {
   }
 };
 
-const updatePassword = model => async (req, res) => {
+const updatePassword = (model:Model<User,{}>) => async (req:Request, res:Response) => {
   try {
-    let { username, password } = req.body;
+    let { username, password }:{ username:string, password:string } = req.body;
     password = await createPasswordHash(password);
     await model.findOneAndUpdate(
       { username },
@@ -39,7 +41,7 @@ const updatePassword = model => async (req, res) => {
   }
 };
 
-const getAll = model => async (req, res) => {
+const getAll = (model:Model<User,{}>) => async (req:Request, res:Response) => {
   try {
     const docs = await model
       .find()
@@ -51,9 +53,9 @@ const getAll = model => async (req, res) => {
   }
 };
 
-const login = model => async (req, res) => {
+const login = (model:Model<User,{}>) => async (req:any, res:Response) => {
   try {
-    const { username, password } = req.body;
+    const { username, password }:{ username:string, password:string } = req.body;
     const doc = await model
       .findOne({ username }, "firstname lastname username password")
       .exec();
