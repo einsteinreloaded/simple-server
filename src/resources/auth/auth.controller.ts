@@ -1,8 +1,12 @@
 import { Auth } from "./auth.model";
 import jwt from "jsonwebtoken";
 import { protect } from "../utils/auth";
-
-const createOne = model => async (req, res) => {
+import {  NextFunction, Request, Response } from "express";
+import { Model } from "mongoose";
+export interface TokenRequest extends Request{
+  user?:Object
+}
+const createOne = (model:Model<Auth,{}>) => async (req:any, res:Response) => {
   try {
     const salt = Date.now().toString();
     const token = jwt.sign(
@@ -19,7 +23,7 @@ const createOne = model => async (req, res) => {
   }
 };
 
-const verifyToken = async (req, res, next) => {
+const verifyToken = async (req:TokenRequest, res:Response) => {
   protect(req, res, () => res.status(201).json({ data: req.user }));
 };
 

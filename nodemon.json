@@ -6,9 +6,9 @@
 		"js": "node"
 	},
 	"runOnChangeOnly": false,
-	"watch": ["src/**/*.js"],
+	"watch": ["src/**/*.ts"],
 	"env": {
 		"APP_ENV": "development"
 	},
-	"ext": "js,json"
+	"ext": "ts,js,json"
 }
