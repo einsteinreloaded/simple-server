@@ -1,5 +1,8 @@
 # simple-server
-a node express based server to try out api development
+Boilerplate template for nodejs express based server written in typescript.
 
 ## Update
-Migrating to typescript
+Migration to typescript completed.
+
+## Under Development
+socket io integration
